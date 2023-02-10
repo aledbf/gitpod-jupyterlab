@@ -12,10 +12,6 @@ tasks:
         --LabApp.token='' \
         --LabApp.allow_origin=* \
         --LabApp.tornado_settings='{"headers": {"Content-Security-Policy": "frame-ancestors *"}}'
-#  - name: wait for jupyter lab
-#    command: |
-#      gp ports await 8888
-#      gp preview $(gp url 8888) --external
       
 vscode:
   extensions:
