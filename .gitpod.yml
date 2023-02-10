@@ -16,7 +16,11 @@ tasks:
 
       pip install distributed
       pip install dask_cuda
-      pip install dask_cudf
+      
+      git clone --recurse-submodules https://github.com/rapidsai/dask-cudf -b v0.6.1
+      pushd dask-cudf
+      python setup.py install
+      popd 
 
       DATA_DIR="${GITPOD_REPO_ROOT}/data"
       mkdir -p "${DATA_DIR}"      
