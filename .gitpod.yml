@@ -1,0 +1,17 @@
+ports:
+  - port: 8888
+    onOpen: open-preview
+
+tasks:
+  - init: |
+      pip install jupyterlab
+  - command: |
+      jupyter lab \
+        --no-browser \
+        --LabApp.token='' \
+        --LabApp.allow_origin=* \
+        --LabApp.tornado_settings='{"headers": {"Content-Security-Policy": "frame-ancestors *"}}'
+      
+vscode:
+  extensions:
+    - ms-python.python
