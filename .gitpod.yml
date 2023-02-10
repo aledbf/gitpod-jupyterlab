@@ -2,19 +2,36 @@ ports:
   - name: ui
     port: 8888
     onOpen: open-browser
-    
+
 tasks:
   - init: |
       pip install jupyterlab
-      pip install jupyterlab-nvdashboard
-      jupyter labextension install jupyterlab-nvdashboard
+
+      pip install -e .
+      jupyter labextension install .
+      jlpm run build
+
+      git clone https://github.com/rapidsai/jupyterlab-nvdashboard
+      pushd jupyterlab-nvdashboard
+      pip install distributed
+      pip install dask_cuda
+      pip install dask_cudf
+      popd
+
+      DATA_DIR="${GITPOD_REPO_ROOT}/data"
+      mkdir -p "${DATA_DIR}"      
+      pushd ${DATA_DIR}
+      wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-{01..06}.csv.gz
+      gunzip *.gz
+      popd
+
     command: |
       jupyter lab \
         --no-browser \
         --LabApp.token='' \
         --LabApp.allow_origin=* \
         --LabApp.tornado_settings='{"headers": {"Content-Security-Policy": "frame-ancestors *"}}'
-      
+
 vscode:
   extensions:
     - ms-python.python
