@@ -6,6 +6,8 @@ ports:
 tasks:
   - init: |
       pip install jupyterlab
+      pip install jupyterlab-nvdashboard
+      jupyter labextension install jupyterlab-nvdashboard
     command: |
       jupyter lab \
         --no-browser \
