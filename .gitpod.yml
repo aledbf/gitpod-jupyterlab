@@ -6,16 +6,20 @@ ports:
 tasks:
   - init: |
       pip install jupyterlab
+      pip install cookiecutter
 
       git clone https://github.com/rapidsai/jupyterlab-nvdashboard
       pushd jupyterlab-nvdashboard
+      python -m jupyterlab.upgrade_extension .
       pip install -e .
-      jupyter labextension install .
+      jlpm install
       jlpm run build
+      jupyter labextension install .
       popd
 
       pip install distributed
       pip install dask_cuda
+      pip install "dask[complete]" 
       
       git clone --recurse-submodules https://github.com/rapidsai/dask-cudf -b v0.6.1
       pushd dask-cudf
