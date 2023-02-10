@@ -7,16 +7,16 @@ tasks:
   - init: |
       pip install jupyterlab
 
+      git clone https://github.com/rapidsai/jupyterlab-nvdashboard
+      pushd jupyterlab-nvdashboard
       pip install -e .
       jupyter labextension install .
       jlpm run build
+      popd
 
-      git clone https://github.com/rapidsai/jupyterlab-nvdashboard
-      pushd jupyterlab-nvdashboard
       pip install distributed
       pip install dask_cuda
       pip install dask_cudf
-      popd
 
       DATA_DIR="${GITPOD_REPO_ROOT}/data"
       mkdir -p "${DATA_DIR}"      
