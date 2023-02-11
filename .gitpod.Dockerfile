@@ -2,7 +2,7 @@ FROM gitpod/workspace-full
 
 RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
     && bash Miniconda3-latest-Linux-x86_64.sh -p /workspace/miniconda -b \
-    && Miniconda3-latest-Linux-x86_64.sh
+    && rm Miniconda3-latest-Linux-x86_64.sh
 
 ENV PATH=$PATH:/workspace/miniconda/bin/
 
