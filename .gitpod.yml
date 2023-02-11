@@ -5,33 +5,25 @@ ports:
 
 tasks:
   - init: |
-      pip install jupyterlab
-      pip install cookiecutter
+  
+      curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+      bash Miniconda3-latest-Linux-x86_64.sh -p /workspace/miniconda -b
 
-      git clone https://github.com/rapidsai/jupyterlab-nvdashboard
-      pushd jupyterlab-nvdashboard
-      python -m jupyterlab.upgrade_extension .
-      pip install -e .
-      jlpm install
-      jlpm run build
-      jupyter labextension install .
-      popd
+      #conda create -n tf_gpu python==3.8
+      #conda activate tf_gpu
+      conda install cudatoolkit=11.0 cudnn=8.0 -c=conda-forge
+      pip install --upgrade tensorflow-gpu==2.4.1
+      pip install ipykernel
+      python -m ipykernel install --user --name tf_gpu --display-name "TensorFlowGPU"
+      conda install jupyterlab
+      pip install keras    
 
-      pip install distributed
-      pip install dask_cuda
-      pip install "dask[complete]" 
-      
-      git clone --recurse-submodules https://github.com/rapidsai/dask-cudf -b v0.6.1
-      pushd dask-cudf
-      python setup.py install
-      popd 
-
-      DATA_DIR="${GITPOD_REPO_ROOT}/data"
-      mkdir -p "${DATA_DIR}"      
-      pushd ${DATA_DIR}
-      wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-{01..06}.csv.gz
-      gunzip *.gz
-      popd
+      #DATA_DIR="${GITPOD_REPO_ROOT}/data"
+      #mkdir -p "${DATA_DIR}"      
+      #pushd ${DATA_DIR}
+      #wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-{01..06}.csv.gz
+      #gunzip *.gz
+      #popd
 
     command: |
       jupyter lab \
