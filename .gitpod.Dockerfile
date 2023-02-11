@@ -2,7 +2,8 @@ FROM gitpod/workspace-full
 
 RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
     && sudo bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b \
-    && rm Miniconda3-latest-Linux-x86_64.sh
+    && rm Miniconda3-latest-Linux-x86_64.sh \
+    && sudo chown -R gitpod:gitpod /miniconda
 
 ENV PATH=$PATH:/miniconda/bin/
 
