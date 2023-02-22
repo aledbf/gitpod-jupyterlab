@@ -6,7 +6,7 @@ ports:
     onOpen: open-browser
 
 tasks:
-    command: |
+  - command: |
       jupyter lab \
         --no-browser \
         --LabApp.token='' \
